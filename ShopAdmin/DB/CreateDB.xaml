@@ -1,0 +1,90 @@
+﻿<Window x:Class="ShopAdmin.DB.CreateDB"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ShopAdmin.DB"
+        mc:Ignorable="d"
+        Title="Создать окно"  MinHeight="400" MinWidth="700" MaxHeight="400" MaxWidth="700" Height="400" Width="700" WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" BorderBrush="#FFBB0606" BorderThickness="5">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="46*"/>
+            <ColumnDefinition Width="53*"/>
+            <ColumnDefinition Width="39*"/>
+            <ColumnDefinition Width="46*"/>
+            <ColumnDefinition Width="46*"/>
+            <ColumnDefinition Width="46*"/>
+            <ColumnDefinition Width="46*"/>
+            <ColumnDefinition Width="46*"/>
+            <ColumnDefinition Width="46*"/>
+            <ColumnDefinition Width="25*"/>
+            <ColumnDefinition Width="67*"/>
+            <ColumnDefinition Width="71*"/>
+            <ColumnDefinition Width="42*"/>
+            <ColumnDefinition Width="36*"/>
+            <ColumnDefinition Width="35*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Label FontSize="14" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="4" VerticalContentAlignment="Bottom" Padding="0">Название базы данных:</Label>
+        <TextBox x:Name="DB_name" Grid.Row="1" Grid.Column="5" Text="Default" Grid.ColumnSpan="9" BorderThickness="2 2 2 2" MaxLength="50" BorderBrush="Black" VerticalContentAlignment="Bottom" FontSize="18" AutomationProperties.HelpText="Название главного файла базы данных"></TextBox>
+
+        <Label FontSize="14" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" VerticalAlignment="Bottom" Padding="0 0 0 0" Height="19" >Путь к файлам ДБ:</Label>
+        <TextBox AutomationProperties.HelpText="Путь к директории БД"  x:Name="DB_path" Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="9" MaxLength="255" BorderThickness="2 2 2 2" BorderBrush="Black" VerticalContentAlignment="Bottom" FontSize="18"></TextBox>
+        <Button AutomationProperties.HelpText="Нажмите для открытия диалога выбора файла" Grid.Row="3" Grid.Column="13" Click="ViewFolder">...</Button>
+
+        <Label FontSize="14" Grid.Row="5" Grid.Column="1" VerticalAlignment="Bottom" Padding="0 0 0 0" Height="19" >Вид ДБ:</Label>
+        <ComboBox x:Name="DB_type" Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="2" Padding="0" FontSize="14" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom" SelectedIndex="0" AllowDrop="True">
+            <ComboBoxItem Content="ASDB"/>
+            <ComboBoxItem Content="JSON"/>
+        </ComboBox>
+
+        <Label Grid.Row="5" Grid.Column="5" Grid.ColumnSpan="2" FontSize="14" VerticalAlignment="Bottom" Padding="0 0 0 0" Height="19">Кодировка:</Label>
+        <ComboBox x:Name="DB_encode" Grid.Row="5" Grid.Column="7" Grid.ColumnSpan="2" Padding="0" FontSize="14" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom" SelectedIndex="0" AllowDrop="True">
+            <ComboBoxItem Content="ASCII"/>
+            <!--<ComboBoxItem Content="UTF-8"/>-->
+        </ComboBox>
+        <Label Grid.Row="5" Grid.Column="10" Grid.ColumnSpan="2" FontSize="14" VerticalAlignment="Bottom" Padding="0 0 0 0">Метод шифрования:</Label>
+        <ComboBox x:Name="DB_keyType" Grid.Row="5" Grid.Column="12" Grid.ColumnSpan="2" Padding="0" FontSize="14" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom" SelectedIndex="0" AllowDrop="True" SelectionChanged="KEY_Change">
+            <ComboBoxItem Content="NOKEY"/>
+            <!--<ComboBoxItem Content="DEFAULT"/>
+            <ComboBoxItem Content="XOR"/>
+            <ComboBoxItem Content="OR"/>
+            <ComboBoxItem Content="CAESAR"/>-->
+        </ComboBox>
+        <TextBox x:Name="DB_key" Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="5" Cursor="No" BorderThickness="2 2 2 2" BorderBrush="Black" VerticalContentAlignment="Bottom" FontSize="18" MaxLength="20" IsEnabled="False" Background="#FFB9B9B9" Loaded="LoadKey">Ключ шифрования</TextBox>
+
+        <Label Grid.Row="7" Grid.Column="8" Grid.ColumnSpan="3"  FontSize="14" VerticalAlignment="Bottom" Padding="0 0 0 0">Метод сжатия БД:</Label>
+        <ComboBox x:Name="DB_arch" Grid.Row="7" Grid.Column="11" Grid.ColumnSpan="2" Padding="0" FontSize="14" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom" SelectedIndex="0" AllowDrop="True">
+            <ComboBoxItem>NO</ComboBoxItem>
+            <!--<ComboBoxItem>ZIP</ComboBoxItem>-->
+            <ComboBoxItem>ASPACK</ComboBoxItem>
+        </ComboBox>
+
+        <Label Grid.Row="9" Grid.Column="1" Grid.ColumnSpan="2" FontSize="14" VerticalAlignment="Bottom" Padding="0 0 0 0">Пароль ДБ:</Label>
+        <PasswordBox IsEnabled="False" Background="#FFB9B9B9" Cursor="No" AutomationProperties.HelpText="По умолчанию три нуля" x:Name="DB_password" Grid.Row="9" Grid.Column="3" Grid.ColumnSpan="4"  BorderThickness="2 2 2 2" MaxLength="50" BorderBrush="Black" VerticalContentAlignment="Bottom" FontSize="18"></PasswordBox>
+
+        <Label Grid.Row="9" Grid.Column="8" Grid.ColumnSpan="3" FontSize="14" VerticalAlignment="Bottom" Padding="0 0 0 0">Дата создания ДБ:</Label>
+        <DatePicker x:Name="DB_Date" Grid.Row="9" Grid.Column="11" Grid.ColumnSpan="3" BorderThickness="2 2 2 2" BorderBrush="Black" VerticalContentAlignment="Bottom" FontSize="13"></DatePicker>
+
+        <Button Cursor="Hand" Grid.Row="11" Grid.Column="1" Grid.ColumnSpan="5" Grid.RowSpan="3" FontSize="25" Click="Cancel">Отмена</Button>
+        <Button x:Name="button" Cursor="Hand" Grid.Row="11" Grid.Column="9" Grid.ColumnSpan="5" Grid.RowSpan="3" FontSize="25" Click="Create">
+            <Label HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="Green" Foreground="White" Width="{Binding ActualWidth, ElementName=button, Mode=OneWay}" Height="{Binding ActualHeight, ElementName=button, Mode=OneWay}">Создать</Label>
+        </Button>
+    </Grid>
+</Window>
